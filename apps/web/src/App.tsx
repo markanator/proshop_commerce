@@ -13,6 +13,10 @@ function App() {
           <Route path="/product" element={<Outlet />}>
             <Route path=":productId" element={<ProductPage />} />
           </Route>
+          <Route path="/cart" element={<Outlet />}>
+            <Route path=":productId" element={<div>cart home</div>} />
+            <Route index element={<div>cart home s</div>} />
+          </Route>
           <Route path="*" element={<div>PAGE NOT FOUND</div>} />
         </Route>
       </Routes>
