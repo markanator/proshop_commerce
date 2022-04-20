@@ -1,26 +1,21 @@
 import * as express from 'express';
 import * as cors from 'cors';
 import { config } from 'dotenv';
-import products from './data/products';
+import * as morgan from 'morgan';
+import routes from './routes';
 
+// load environment variables
 config();
 
+// initialize app
 const app = express();
 
+// MW
 app.use(cors());
+app.use(morgan('dev'));
 
-app.get('/api', (req, res) => {
-  res.send('Hello World');
-});
+// Routes
+app.use('/api', routes);
 
-app.get('/api/products', (req, res) => {
-  res.json(products);
-});
-
-app.get('/api/products/:id', (req, res) => {
-  const productId = req.params.id;
-  const product = { id: productId, title: 'your product' };
-  res.json(product);
-});
-
+// export server
 export default app;
