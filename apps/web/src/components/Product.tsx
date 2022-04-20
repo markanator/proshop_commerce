@@ -1,8 +1,8 @@
-import React from "react";
-import { Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { IProduct } from "../dummyData/products";
-import Rating from "./Rating";
+import React from 'react';
+import { Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { IProduct } from '../types';
+import Rating from './Rating';
 
 type Props = {
   product: IProduct;
@@ -11,11 +11,11 @@ type Props = {
 const Product = ({ product }: Props) => {
   return (
     <Card className="my-3 p-3 rounded">
-      <Link to={`/product/${product._id}`}>
+      <Link to={`/product/${product.id}`}>
         <Card.Img variant="top" src={product.image} />
       </Link>
       <Card.Body>
-        <Link to={`/product/${product._id}`}>
+        <Link to={`/product/${product.id}`}>
           <Card.Title as="div">
             <strong>{product.name}</strong>
           </Card.Title>
