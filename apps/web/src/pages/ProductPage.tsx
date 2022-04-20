@@ -1,15 +1,14 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import { Row, Col, Image, ListGroup, Card, Button } from "react-bootstrap";
-import Rating from "../components/Rating";
-import { Link } from "react-router-dom";
-import { useProductByIdQuery } from "../async/queries/products";
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap';
+import Rating from '../components/Rating';
+import { Link } from 'react-router-dom';
+import { useProductByIdQuery } from '../async/queries/products';
 
 type Props = {};
 
 const ProductPage = (props: Props) => {
   const { productId } = useParams();
-  // const product = products.find((p) => p._id === productId);
   const { data: product, isLoading } = useProductByIdQuery(productId!);
   if (isLoading) {
     return <div>Loading...</div>;
@@ -56,7 +55,7 @@ const ProductPage = (props: Props) => {
                 <Row>
                   <Col>Status:</Col>
                   <Col>
-                    {product?.countInStock! > 0 ? "In Stock" : "Out Of Stock"}
+                    {product?.countInStock! > 0 ? 'In Stock' : 'Out Of Stock'}
                   </Col>
                 </Row>
               </ListGroup.Item>

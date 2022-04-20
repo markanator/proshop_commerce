@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
-import AppLayout from "./components/AppLayout";
-import Home from "./pages/Home";
-import ProductPage from "./pages/ProductPage";
+import { useState } from 'react';
+import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
+import AppLayout from './components/AppLayout';
+import Home from './pages/Home';
+import ProductPage from './pages/ProductPage';
 
 function App() {
   return (
@@ -13,6 +13,7 @@ function App() {
           <Route path="/product" element={<Outlet />}>
             <Route path=":productId" element={<ProductPage />} />
           </Route>
+          <Route path="*" element={<div>PAGE NOT FOUND</div>} />
         </Route>
       </Routes>
     </BrowserRouter>
