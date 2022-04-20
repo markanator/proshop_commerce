@@ -50,7 +50,22 @@
     "seed": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
-        "command": "ts-node apps/api/src/utils/seed/index.ts"
+        "command": "node prisma/seed.js",
+        "cwd": "apps/api"
+      }
+    },
+    "migrate-dev": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "npx prisma migrate dev --schema prisma/schema.prisma",
+        "cwd": "apps/api"
+      }
+    },
+    "generate": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "npx prisma generate --schema prisma/schema.prisma",
+        "cwd": "apps/api"
       }
     }
   },

@@ -41,3 +41,4 @@ Thumbs.db
 .env
 **/*/.env
 apps/web/.env
+**/*.db

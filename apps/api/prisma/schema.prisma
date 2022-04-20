@@ -6,12 +6,12 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id              String            @id @default(auto()) @map("_id") @db.ObjectId
+  id              Int               @id @default(autoincrement())
   email           String            @unique
   name            String
   password        String
@@ -22,26 +22,26 @@ model User {
 }
 
 model Review {
-  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  id              Int       @id @default(autoincrement())
   name            String
-  rating          Int
+  rating          Decimal
   comment         String
   // boilerplate
   createdAt       DateTime  @default(now())
   updatedAt       DateTime?
   // relations
-  productId       String?   @db.ObjectId
+  productId       Int?
   productReviewed Product?  @relation(fields: [productId], references: [id])
 }
 
 model Product {
-  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  id           Int         @id @default(autoincrement())
   name         String
   image        String
   brand        String
   category     String
   description  String
-  rating       Int
+  rating       Decimal
   numReviews   Int
   price        Int
   countInStock Int
@@ -50,13 +50,13 @@ model Product {
   updatedAt    DateTime?
   // relationships
   reviews      Review[]
-  userId       String      @db.ObjectId
+  userId       Int
   author       User        @relation(fields: [userId], references: [id])
   orderItem    OrderItem[]
 }
 
 model Order {
-  id            String          @id @default(auto()) @map("_id") @db.ObjectId
+  id            Int             @id @default(autoincrement())
   paymentMethod String
   taxPrice      Int
   shippingPrice Int
@@ -71,13 +71,13 @@ model Order {
   createdAt     DateTime        @default(now())
   updatedAt     DateTime?
   // relationships
-  userId        String          @db.ObjectId
+  userId        Int
   orderUser     User            @relation(fields: [userId], references: [id])
   paymentResult PaymentResult[]
 }
 
 model OrderItem {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  id        Int       @id @default(autoincrement())
   name      String
   image     String
   qty       Int
@@ -86,12 +86,12 @@ model OrderItem {
   createdAt DateTime  @default(now())
   updatedAt DateTime?
   // relationships
-  productId String    @db.ObjectId
+  productId Int
   product   Product   @relation(fields: [productId], references: [id])
 }
 
 model ShippingAddress {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  id        Int       @id @default(autoincrement())
   address1  String
   address2  String?
   city      String
@@ -103,12 +103,12 @@ model ShippingAddress {
   createdAt DateTime  @default(now())
   updatedAt DateTime?
   // relationships
-  userId    String    @db.ObjectId
+  userId    Int
   user      User      @relation(fields: [userId], references: [id])
 }
 
 model PaymentResult {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  id         Int       @id @default(autoincrement())
   status     String
   paymentId  String
   updateTime String
@@ -116,6 +116,6 @@ model PaymentResult {
   createdAt  DateTime  @default(now())
   updatedAt  DateTime?
   // relationships
-  orderId    String    @db.ObjectId
+  orderId    Int
   order      Order     @relation(fields: [orderId], references: [id])
 }
