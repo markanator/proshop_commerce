@@ -2,12 +2,10 @@ import * as express from 'express';
 import * as cors from 'cors';
 import { config } from 'dotenv';
 import products from './data/products';
-import connectDb from './config/db';
 
 config();
 
 const app = express();
-connectDb();
 
 app.use(cors());
 
@@ -21,7 +19,7 @@ app.get('/api/products', (req, res) => {
 
 app.get('/api/products/:id', (req, res) => {
   const productId = req.params.id;
-  const product = products.find((product) => product._id === productId);
+  const product = { id: productId, title: 'your product' };
   res.json(product);
 });
 

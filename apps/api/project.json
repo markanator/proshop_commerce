@@ -46,6 +46,12 @@
         "jestConfig": "apps/api/jest.config.js",
         "passWithNoTests": true
       }
+    },
+    "seed": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "ts-node apps/api/src/utils/seed/index.ts"
+      }
     }
   },
   "tags": []
