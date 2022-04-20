@@ -3,6 +3,7 @@ import * as cors from 'cors';
 import { config } from 'dotenv';
 import * as morgan from 'morgan';
 import routes from './routes';
+import { errorHandler, notFoundHandler } from './utils/errorHandlers';
 
 // load environment variables
 config();
@@ -11,11 +12,19 @@ config();
 const app = express();
 
 // MW
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 app.use(cors());
-app.use(morgan('dev'));
+app.use(express.json());
 
 // Routes
 app.use('/api', routes);
+
+// 404
+app.use(notFoundHandler);
+// error handler
+app.use(errorHandler);
 
 // export server
 export default app;

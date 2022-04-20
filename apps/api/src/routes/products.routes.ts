@@ -28,13 +28,11 @@ router.get(
       where: {
         id: Number(productId),
       },
-      rejectOnNotFound: true,
     });
+
     if (!product) {
-      res.status(404).json({
-        message: 'Product not found',
-      });
-      return;
+      res.status(404);
+      throw new Error('Product not found');
     }
 
     res.json(product);
