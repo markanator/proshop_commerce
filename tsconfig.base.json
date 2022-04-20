@@ -13,8 +13,11 @@
     "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
+    "composite": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@nx-mern-commerce/data-model": ["libs/data-model/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
