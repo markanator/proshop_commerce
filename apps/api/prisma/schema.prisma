@@ -1,0 +1,121 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String            @id @default(auto()) @map("_id") @db.ObjectId
+  email           String            @unique
+  name            String
+  password        String
+  isAdmin         Boolean
+  createdProducts Product[] // one user can create many products
+  orders          Order[] // one user can create many orders
+  shippingAddress ShippingAddress[] // one user can create many shipping addresses
+}
+
+model Review {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
+  rating          Int
+  comment         String
+  // boilerplate
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime?
+  // relations
+  productId       String?   @db.ObjectId
+  productReviewed Product?  @relation(fields: [productId], references: [id])
+}
+
+model Product {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  image        String
+  brand        String
+  category     String
+  description  String
+  rating       Int
+  numReviews   Int
+  price        Int
+  countInStock Int
+  // boilerplate
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime?
+  // relationships
+  reviews      Review[]
+  userId       String      @db.ObjectId
+  author       User        @relation(fields: [userId], references: [id])
+  orderItem    OrderItem[]
+}
+
+model Order {
+  id            String          @id @default(auto()) @map("_id") @db.ObjectId
+  paymentMethod String
+  taxPrice      Int
+  shippingPrice Int
+  totalPrice    Int
+  isPaid        Boolean
+  paidAt        DateTime?
+  isShipped     Boolean
+  shippedAt     DateTime?
+  isDelivered   Boolean
+  deliveredAt   DateTime?
+  // boilerplate
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime?
+  // relationships
+  userId        String          @db.ObjectId
+  orderUser     User            @relation(fields: [userId], references: [id])
+  paymentResult PaymentResult[]
+}
+
+model OrderItem {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  image     String
+  qty       Int
+  price     Int
+  // boilerplate
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+  // relationships
+  productId String    @db.ObjectId
+  product   Product   @relation(fields: [productId], references: [id])
+}
+
+model ShippingAddress {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  address1  String
+  address2  String?
+  city      String
+  state     String
+  country   String
+  zip       String
+  phone     String?
+  // boilerplate
+  createdAt DateTime  @default(now())
+  updatedAt DateTime?
+  // relationships
+  userId    String    @db.ObjectId
+  user      User      @relation(fields: [userId], references: [id])
+}
+
+model PaymentResult {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  status     String
+  paymentId  String
+  updateTime String
+  // boilerplate
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime?
+  // relationships
+  orderId    String    @db.ObjectId
+  order      Order     @relation(fields: [orderId], references: [id])
+}

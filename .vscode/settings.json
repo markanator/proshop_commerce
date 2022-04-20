@@ -1,6 +1,7 @@
 {
   "conventionalCommits.scopes": [
     "web",
-    "api"
+    "api",
+    "repo"
   ]
 }
