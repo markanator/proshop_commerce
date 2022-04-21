@@ -11,6 +11,7 @@
     "schema": "./apps/api/prisma/schema.prisma"
   },
   "dependencies": {
+    "@loadable/component": "^5.15.2",
     "@prisma/client": "^3.12.0",
     "@reduxjs/toolkit": "^1.8.1",
     "axios": "^0.26.1",
@@ -53,6 +54,7 @@
     "@types/cors": "^2.8.12",
     "@types/express": "4.17.13",
     "@types/jest": "27.4.1",
+    "@types/loadable__component": "^5.13.4",
     "@types/mongoose": "^5.10.1",
     "@types/morgan": "^1.9.3",
     "@types/node": "17.0.25",
@@ -81,6 +83,7 @@
     "ts-jest": "27.1.4",
     "ts-node": "^10.7.0",
     "typescript": "^4.6.3",
-    "vite": "^2.9.5"
+    "vite": "^2.9.5",
+    "vite-plugin-compression": "^0.5.1"
   }
 }

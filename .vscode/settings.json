@@ -3,5 +3,6 @@
     "web",
     "api",
     "repo"
-  ]
+  ],
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }

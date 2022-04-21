@@ -5,7 +5,11 @@
   "targets": {
     "build": {
       "executor": "@wanews/nx-vite:build",
-      "options": {}
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/web",
+        "assets": ["apps/web/public"]
+      }
     },
     "serve": {
       "executor": "@wanews/nx-vite:serve",
