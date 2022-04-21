@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
 import AppLayout from './components/AppLayout';
+import CartPage from './pages/CartPage';
 import Home from './pages/Home';
 import ProductPage from './pages/ProductPage';
 
@@ -14,8 +14,8 @@ function App() {
             <Route path=":productId" element={<ProductPage />} />
           </Route>
           <Route path="/cart" element={<Outlet />}>
-            <Route path=":productId" element={<div>cart home</div>} />
-            <Route index element={<div>cart home s</div>} />
+            <Route path=":productId" element={<CartPage />} />
+            <Route index element={<CartPage />} />
           </Route>
           <Route path="*" element={<div>PAGE NOT FOUND</div>} />
         </Route>
