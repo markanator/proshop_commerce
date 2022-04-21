@@ -47,8 +47,8 @@ const ProductPage = () => {
             </ListGroup.Item>
             <ListGroup.Item>
               <Rating
-                value={product.rating}
-                text={`${product.numReviews} reviews`}
+                value={product?.rating}
+                text={`${product?.numReviews} reviews`}
               />
             </ListGroup.Item>
             <ListGroup.Item>
@@ -72,7 +72,7 @@ const ProductPage = () => {
                 <Row>
                   <Col>Status:</Col>
                   <Col>
-                    {product.countInStock > 0 ? 'In Stock' : 'Out Of Stock'}
+                    {product?.countInStock > 0 ? 'In Stock' : 'Out Of Stock'}
                   </Col>
                 </Row>
               </ListGroup.Item>
@@ -86,7 +86,7 @@ const ProductPage = () => {
                         value={qty}
                         onChange={(e) => setQty(Number(e.target.value))}
                       >
-                        {[...Array(product.countInStock).keys()].map((x) => (
+                        {[...Array(product?.countInStock).keys()].map((x) => (
                           <option key={x + 1} value={x + 1}>
                             {x + 1}
                           </option>
@@ -101,7 +101,7 @@ const ProductPage = () => {
                   onClick={handleAddToCart}
                   className="w-100 btn-block"
                   type="button"
-                  disabled={product.countInStock <= 0}
+                  disabled={product?.countInStock <= 0}
                 >
                   Add to Cart
                 </Button>
