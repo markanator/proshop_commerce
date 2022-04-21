@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 import {
-  Row,
+  Button,
+  Card,
   Col,
+  Form,
   Image,
   ListGroup,
-  Card,
-  Button,
-  Form,
+  Row,
 } from 'react-bootstrap';
-import Rating from '../components/Rating';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useProductByIdQuery } from '../async/queries/products';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
+import Rating from '../components/Rating';
+import { formatMoney } from '../utils/formatMoney';
 
 type Props = {};
 
@@ -35,7 +35,7 @@ const ProductPage = (props: Props) => {
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <Message variant="error">{error?.message}</Message>
+        <Message variant="error">{(error as any)?.message}</Message>
       ) : null}
       <Row>
         <Col md={6}>
@@ -52,7 +52,9 @@ const ProductPage = (props: Props) => {
                 text={`${product?.numReviews} reviews`}
               />
             </ListGroup.Item>
-            <ListGroup.Item>Price: ${product?.price}</ListGroup.Item>
+            <ListGroup.Item>
+              Price: ${formatMoney(product?.price)}
+            </ListGroup.Item>
             <ListGroup.Item>Description: {product?.description}</ListGroup.Item>
           </ListGroup>
         </Col>
@@ -63,7 +65,7 @@ const ProductPage = (props: Props) => {
                 <Row>
                   <Col>Price:</Col>
                   <Col>
-                    <strong>${product?.price}</strong>
+                    <strong>${formatMoney(product?.price)}</strong>
                   </Col>
                 </Row>
               </ListGroup.Item>

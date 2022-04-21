@@ -2,6 +2,7 @@ import React from 'react';
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { IProduct } from '../types';
+import { formatMoney } from '../utils/formatMoney';
 import Rating from './Rating';
 
 type Props = {
@@ -26,7 +27,7 @@ const Product = ({ product }: Props) => {
             text={`${product.numReviews} reviews`}
           />
         </Card.Text>
-        <Card.Text as="h3">${product.price}</Card.Text>
+        <Card.Text as="h3">{formatMoney(product.price)}</Card.Text>
       </Card.Body>
     </Card>
   );
