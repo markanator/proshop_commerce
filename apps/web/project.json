@@ -8,6 +8,7 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/web",
+        "tsConfig": "apps/web/tsconfig.app.json",
         "assets": ["apps/web/public"]
       }
     },
