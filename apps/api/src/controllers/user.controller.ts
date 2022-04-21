@@ -6,7 +6,7 @@ import { catchAsyncErrors } from '../utils/errorHandlers';
 // @desc   Authenticate user, sends token
 // @route  POST /api/users/login
 // @access Public
-export const authenticateUser = catchAsyncErrors(async (req, res) => {
+export const localUserLogin = catchAsyncErrors(async (req, res) => {
   const { email, password } = req.body;
 
   const foundUser = await prisma.user.findFirst({
@@ -31,12 +31,35 @@ export const authenticateUser = catchAsyncErrors(async (req, res) => {
     throw new Error('Incorrect email or password.');
   }
 
-  res.json({
+  return res.json({
     id: foundUser.id,
     name: foundUser.name,
     email,
     isAdmin: foundUser.isAdmin,
     token: generateToken(foundUser),
   });
-  return;
+});
+
+// @desc   get user profile
+// @route  GET /api/users/profile
+// @access Public
+export const getUserProfile = catchAsyncErrors(async (req, res) => {
+  const foundUser = await prisma.user.findUnique({
+    where: {
+      id: req.user.id,
+    },
+    include: {
+      createdProducts: false,
+      orders: true,
+      shippingAddress: true,
+    },
+  });
+
+  if (!foundUser) {
+    res.status(400);
+    throw new Error('Incorrect email or password.');
+  }
+
+  delete foundUser.password;
+  return res.send(foundUser);
 });

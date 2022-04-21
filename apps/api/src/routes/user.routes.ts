@@ -1,8 +1,13 @@
 import { Router } from 'express';
-import { authenticateUser } from '../controllers/user.controller';
+import { localUserLogin, getUserProfile } from '../controllers/user.controller';
+import { authenticatedGaurd } from '../middlware/auth.mw';
 
 const router = Router();
 
-router.post('/login', authenticateUser);
+// AUTH STUFF
+router.post('/login', localUserLogin);
+
+// PROFILES
+router.get('/profile', authenticatedGaurd, getUserProfile);
 
 export default router;
