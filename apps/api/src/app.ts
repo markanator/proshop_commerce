@@ -3,7 +3,11 @@ import * as cors from 'cors';
 import { config } from 'dotenv';
 import * as morgan from 'morgan';
 import routes from './routes';
-import { errorHandler, notFoundHandler } from './utils/errorHandlers';
+import {
+  developmentErrors,
+  errorHandler,
+  notFoundHandler,
+} from './utils/errorHandlers';
 
 // load environment variables
 config();
@@ -24,7 +28,11 @@ app.use('/api', routes);
 // 404
 app.use(notFoundHandler);
 // error handler
-app.use(errorHandler);
+if (process.env.NODE_ENV === 'development') {
+  app.use(developmentErrors);
+} else {
+  app.use(errorHandler);
+}
 
 // export server
 export default app;
