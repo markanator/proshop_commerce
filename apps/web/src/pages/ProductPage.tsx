@@ -15,12 +15,10 @@ import Message from '../components/Message';
 import Rating from '../components/Rating';
 import { formatMoney } from '../utils/formatMoney';
 
-type Props = {};
-
-const ProductPage = (props: Props) => {
+const ProductPage = () => {
   const navigate = useNavigate();
   const { productId } = useParams();
-  const { data: product, isLoading, error } = useProductByIdQuery(productId!);
+  const { data: product, isLoading, error } = useProductByIdQuery(productId);
   const [qty, setQty] = useState(1);
 
   const handleAddToCart = () => {
@@ -35,6 +33,7 @@ const ProductPage = (props: Props) => {
       {isLoading ? (
         <Loader />
       ) : error ? (
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         <Message variant="error">{(error as any)?.message}</Message>
       ) : null}
       <Row>
@@ -48,8 +47,8 @@ const ProductPage = (props: Props) => {
             </ListGroup.Item>
             <ListGroup.Item>
               <Rating
-                value={product?.rating!}
-                text={`${product?.numReviews} reviews`}
+                value={product.rating}
+                text={`${product.numReviews} reviews`}
               />
             </ListGroup.Item>
             <ListGroup.Item>
@@ -73,7 +72,7 @@ const ProductPage = (props: Props) => {
                 <Row>
                   <Col>Status:</Col>
                   <Col>
-                    {product?.countInStock! > 0 ? 'In Stock' : 'Out Of Stock'}
+                    {product.countInStock > 0 ? 'In Stock' : 'Out Of Stock'}
                   </Col>
                 </Row>
               </ListGroup.Item>
@@ -102,7 +101,7 @@ const ProductPage = (props: Props) => {
                   onClick={handleAddToCart}
                   className="w-100 btn-block"
                   type="button"
-                  disabled={product?.countInStock! <= 0}
+                  disabled={product.countInStock <= 0}
                 >
                   Add to Cart
                 </Button>

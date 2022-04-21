@@ -1,12 +1,6 @@
 {
-  "name": "web",
-  "private": true,
-  "version": "1.0.0",
-  "scripts": {
-    "serve": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {},
-  "devDependencies": {}
+  "name": "test",
+  "version": "0.0.1",
+  "main": "./dist/index.js",
+  "private": true
 }

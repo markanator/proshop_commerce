@@ -15,7 +15,7 @@ export const useProductByIdQuery = (productId?: string | number) => {
   return useQuery(
     [ONE_PRODUCT, productId],
     async () => {
-      const { data } = await getProductById(productId!);
+      const { data } = await getProductById(productId);
       return data;
     },
     {

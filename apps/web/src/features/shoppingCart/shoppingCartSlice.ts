@@ -21,7 +21,7 @@ export const shoppingCartSlice = createSlice({
       state,
       {
         payload: { product, qty },
-      }: PayloadAction<{ product: any; qty: number }>
+      }: PayloadAction<{ product: Product; qty: number }>
     ) => {
       const newItem: ProductWithQuantity = { ...product, qty };
       const existingItem = state.cartItems.some(({ id }) => id === newItem.id);

@@ -8,24 +8,23 @@ import {
   ListGroup,
   Row,
 } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
-import { useParams, useSearchParams } from 'react-router-dom';
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { useProductByIdQuery } from '../async/queries/products';
 import Message from '../components/Message';
 import {
-  ProductWithQuantity,
-  selectShoppingCart,
-} from '../features/shoppingCart/shoppingCartSlice';
-import {
   addItem,
   removeItem,
+  selectShoppingCart,
 } from '../features/shoppingCart/shoppingCartSlice';
 import { formatMoney } from '../utils/formatMoney';
 
-type Props = {};
-
-const CartPage = (props: Props) => {
+const CartPage = () => {
   const { productId } = useParams();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
