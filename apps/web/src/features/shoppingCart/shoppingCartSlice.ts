@@ -34,23 +34,15 @@ export const shoppingCartSlice = createSlice({
         state.cartItems.push(newItem);
       }
     },
-  },
-  extraReducers: (builder) => {
-    // builder
-    //   .addCase(incrementAsync.pending, (state) => {
-    //     state.status = 'loading';
-    //   })
-    //   .addCase(incrementAsync.fulfilled, (state, action) => {
-    //     state.status = 'idle';
-    //     state.value += action.payload;
-    //   })
-    //   .addCase(incrementAsync.rejected, (state) => {
-    //     state.status = 'failed';
-    //   });
+    removeItem: (state, { payload }: PayloadAction<number>) => {
+      state.cartItems = state.cartItems.filter(
+        (cartItem) => cartItem.id !== payload
+      );
+    },
   },
 });
 
-export const { addItem } = shoppingCartSlice.actions;
+export const { addItem, removeItem } = shoppingCartSlice.actions;
 
 export const selectShoppingCart = (state: RootState) => state.shoppingCart;
 

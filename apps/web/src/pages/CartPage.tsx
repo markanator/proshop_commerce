@@ -17,7 +17,10 @@ import {
   ProductWithQuantity,
   selectShoppingCart,
 } from '../features/shoppingCart/shoppingCartSlice';
-import { addItem } from '../features/shoppingCart/shoppingCartSlice';
+import {
+  addItem,
+  removeItem,
+} from '../features/shoppingCart/shoppingCartSlice';
 import { formatMoney } from '../utils/formatMoney';
 
 type Props = {};
@@ -42,8 +45,8 @@ const CartPage = (props: Props) => {
     dispatch(addItem({ product: productToAdd, qty: qtyToAdd }));
   };
 
-  const removeFromCartHandler = (productToRemove: ProductWithQuantity) => {
-    console.warn({ id: productToRemove.id, qty: productToRemove.qty });
+  const removeFromCartHandler = (id: number) => {
+    dispatch(removeItem(id));
   };
 
   const handleStartCheckoutProcess = () => {
@@ -67,7 +70,7 @@ const CartPage = (props: Props) => {
                   <Col md={3}>
                     <Link to={`/product/${item.id}`}>{item.name}</Link>
                   </Col>
-                  <Col md={2}>{formatMoney(item.price)}</Col>
+                  <Col md={2}>{formatMoney(item.price * item.qty)}</Col>
                   <Col md={2}>
                     <Form.Control
                       as="select"
@@ -87,7 +90,7 @@ const CartPage = (props: Props) => {
                     <Button
                       type="button"
                       variant="light"
-                      onClick={() => removeFromCartHandler(item)}
+                      onClick={() => removeFromCartHandler(item.id)}
                     >
                       Remove
                     </Button>
@@ -106,9 +109,11 @@ const CartPage = (props: Props) => {
                 Subtotal: ({cartItems.reduce((acc, cv) => acc + cv.qty, 0)})
                 items
               </h2>
-              {formatMoney(
-                cartItems.reduce((acc, cv) => acc + cv.qty * cv.price, 0)
-              )}
+              <p>
+                {formatMoney(
+                  cartItems.reduce((acc, cv) => acc + cv.qty * cv.price, 0)
+                )}
+              </p>
             </ListGroup.Item>
             <ListGroup.Item>
               <Button
