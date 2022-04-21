@@ -22,7 +22,7 @@ const Home = (props: Props) => {
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <Message variant="error">{error?.message}</Message>
+        <Message variant="error">{(error as any)?.message}</Message>
       ) : (
         <Row>
           {products.map((product: IProduct) => (

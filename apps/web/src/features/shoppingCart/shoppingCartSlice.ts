@@ -1,8 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { Product } from '@prisma/client';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 
+export type ProductWithQuantity = Product & {
+  qty: number;
+};
 export interface shoppingCartState {
-  cartItems: any[];
+  cartItems: ProductWithQuantity[];
 }
 
 const initialState: shoppingCartState = {
@@ -13,18 +17,21 @@ export const shoppingCartSlice = createSlice({
   name: shoppingCart,
   initialState,
   reducers: {
-    addItem: (state, action) => {
-      const newItem = action.payload;
-      const existingItem = state.cartItems.find(
-        (item) => item.id === newItem.id
-      );
+    addItem: (
+      state,
+      {
+        payload: { product, qty },
+      }: PayloadAction<{ product: any; qty: number }>
+    ) => {
+      const newItem: ProductWithQuantity = { ...product, qty };
+      const existingItem = state.cartItems.some(({ id }) => id === newItem.id);
 
       if (existingItem) {
-        state.cartItems.map((cartItem) =>
-          cartItem.product === existingItem.product ? newItem : cartItem
+        state.cartItems = state.cartItems.map((cartItem) =>
+          cartItem.id === newItem.id ? newItem : cartItem
         );
       } else {
-        state.cartItems.push(action.payload);
+        state.cartItems.push(newItem);
       }
     },
   },
@@ -43,8 +50,8 @@ export const shoppingCartSlice = createSlice({
   },
 });
 
-export const {} = shoppingCartSlice.actions;
+export const { addItem } = shoppingCartSlice.actions;
 
-export const selectProductList = (state: RootState) => state.shoppingCart;
+export const selectShoppingCart = (state: RootState) => state.shoppingCart;
 
 export default shoppingCartSlice.reducer;
